@@ -11,19 +11,29 @@ public class Cave
     int height;
 
     // Constructor
-    public Cave(int width = 0, int height = 0)
+    public Cave(int width = 5, int height = 5)
     {
         this.width = width;
         this.height = height;
 
         tiles = new Dictionary<Tuple<int, int>, Tile>();
 
+        // This is testing
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                GenTileAt(x, y);
+                Debug.Log("TileGen() has been called at " + x + ", " + y);
+            }
+        }
+
         Debug.Log("World Created");
     }
 
     public void GenTileAt(int x, int y)
     {
-        if (tiles[Tuple.Create(x, y)] == null)
+        if (!tiles.ContainsKey(Tuple.Create(x, y)))
         {
             tiles.Add(Tuple.Create(x, y), new Tile(this, x, y));
         }
