@@ -8,6 +8,9 @@ public class CaveController : MonoBehaviour
     public Sprite debugSprite;
     public Sprite gasSprite;
 
+    int c_x = 0;
+    int c_y = 0;
+    private KeyCode keyPressed = KeyCode.None;
 
     Cave cave;
 
@@ -16,14 +19,16 @@ public class CaveController : MonoBehaviour
     {
         cave = new Cave();
 
-        // Create game objects for each tile
+        cave.GenTileAt(c_x, c_y);
+        AddTileGameObject(cave.GetTileAt(c_x, c_y), c_x, c_y);
+        /*// Create game objects for each tile
         for (int x = 0; x < 5; x++)
         {
             for (int y = 0; y < 5; y++)
             {
                 AddTileGameObject(cave.GetTileAt(x, y), x, y);
             }
-        }
+        }*/
     }
 
     float randomizeTimer = 2f;
@@ -31,11 +36,45 @@ public class CaveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        randomizeTimer -= Time.deltaTime;
+        /*randomizeTimer -= Time.deltaTime;
 
         if(randomizeTimer < 0)
         {
             randomizeTimer = 2f;
+        }*/
+
+        if (Input.GetKey(KeyCode.UpArrow) && keyPressed == KeyCode.None)
+        {
+            ++c_y;
+            cave.GenTileAt(c_x, c_y);
+            AddTileGameObject(cave.GetTileAt(c_x, c_y), c_x, c_y);
+            keyPressed = KeyCode.UpArrow;
+        }
+        if (Input.GetKey(KeyCode.DownArrow) && keyPressed == KeyCode.None)
+        {
+            --c_y;
+            cave.GenTileAt(c_x, c_y);
+            AddTileGameObject(cave.GetTileAt(c_x, c_y), c_x, c_y);
+            keyPressed = KeyCode.DownArrow;
+        }
+        if (Input.GetKey(KeyCode.RightArrow) && keyPressed == KeyCode.None)
+        {
+            ++c_x;
+            cave.GenTileAt(c_x, c_y);
+            AddTileGameObject(cave.GetTileAt(c_x, c_y), c_x, c_y);
+            keyPressed = KeyCode.RightArrow;
+        }
+        if (Input.GetKey(KeyCode.LeftArrow) && keyPressed == KeyCode.None)
+        {
+            --c_x;
+            cave.GenTileAt(c_x, c_y);
+            AddTileGameObject(cave.GetTileAt(c_x, c_y), c_x, c_y);
+            keyPressed = KeyCode.LeftArrow;
+        }
+
+        if (Input.GetKeyUp(keyPressed))
+        {
+            keyPressed = KeyCode.None;
         }
     }
 

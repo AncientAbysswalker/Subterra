@@ -18,7 +18,7 @@ public class Cave
 
         tiles = new Dictionary<Tuple<int, int>, Tile>();
 
-        // This is testing
+        /*// This is testing
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
@@ -26,14 +26,19 @@ public class Cave
                 GenTileAt(x, y);
                 Debug.Log("TileGen() has been called at " + x + ", " + y);
             }
-        }
+        }*/
 
         Debug.Log("World Created");
     }
 
+    public bool IsTileAt(int x, int y)
+    {
+        return (tiles.ContainsKey(Tuple.Create(x, y))) ? true : false;
+    }
+
     public void GenTileAt(int x, int y)
     {
-        if (!tiles.ContainsKey(Tuple.Create(x, y)))
+        if (!IsTileAt(x, y))
         {
             tiles.Add(Tuple.Create(x, y), new Tile(this, x, y));
         }
